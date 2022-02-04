@@ -1,0 +1,75 @@
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.app-header {
+  padding: 20px;
+  text-align: right;
+}
+
+.app-content {
+  max-width: 750px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app-quote-list {
+  padding: 0;
+  margin: 0;
+}
+
+.app-quote {
+  list-style: none;
+  border-left: 8px solid #f7df94;
+}
+
+.app-quote-text {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 120%;
+  color: #000000;
+  padding-left: 100px;
+}
+
+.app-quote-all {
+  &:hover {
+    .app-quote-author {
+      color: #ffffff;
+    }
+  }
+}
+
+.app-quote-author {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  color: #4f4f4f;
+}
+
+.app-quote-genre {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #828282;
+  display: flex;
+}
+
+.app-creator {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #828282;
+  text-align: center;
+}
