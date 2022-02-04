@@ -27,9 +27,7 @@ const App = () => {
       ).then((response) => {
         const authorText = response.data.data;
         setSingleQuoteData(response.data.data);
-        authorText.map((el) => {
-          setAuthor(el.quoteAuthor);
-        });
+        authorText.map((el) => setAuthor(el.quoteAuthor));
         setLoading(false);
       });
     } catch (e) {
