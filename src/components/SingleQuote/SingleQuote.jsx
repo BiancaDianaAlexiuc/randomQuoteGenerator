@@ -1,5 +1,6 @@
 import { Button, Box, CircularProgress } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import { toJS } from "mobx";
 
 const SingleQuote = ({ isLoading, singleQuoteData, handleMultipleQuotes }) => {
   return isLoading ? (

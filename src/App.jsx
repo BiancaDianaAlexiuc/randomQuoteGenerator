@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { observer } from "mobx-react";
 
 import "./App.scss";
 
@@ -9,45 +9,27 @@ import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import MultipleQuotes from "./components/MultipleQuotes/MultipleQuotes";
 import SingleQuote from "./components/SingleQuote/SingleQuote";
 
+import storeQ from "../src/quotesStore";
+import storeA from "./authorStore";
+
 const App = () => {
-  const [author, setAuthor] = useState("");
-  const [singleQuoteData, setSingleQuoteData] = useState([]);
-  const [multipleQuoteData, setMultipleOuoteData] = useState([]);
   const [multipleAuthorsBoolean, setMultipleAuthorBoolean] = useState(false);
-  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     getData();
   }, []);
 
-  async function getData() {
-    try {
-      await axios(
-        "https://quote-garden.herokuapp.com/api/v3/quotes/random"
-      ).then((response) => {
-        const authorText = response.data.data;
-        setSingleQuoteData(response.data.data);
-        authorText.map((el) => setAuthor(el.quoteAuthor));
-        setLoading(false);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const getData = () => {
+    storeQ.loadQuotes(
+      "https://quote-garden.herokuapp.com/api/v3/quotes/random"
+    );
+  };
 
-  async function getQuotesByAuthor(author) {
-    try {
-      await axios(
-        `https://quote-garden.herokuapp.com/api/v3/quotes?author=${author}`
-      ).then((response) => {
-        console.log(response.data);
-        setMultipleOuoteData(response.data.data);
-        setLoading(false);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const getQuotesByAuthor = (author) => {
+    storeA.loadMultipleQuotes(
+      `https://quote-garden.herokuapp.com/api/v3/quotes?author=${author}`
+    );
+  };
 
   const handleRandomQuote = () => {
     getData();
@@ -55,7 +37,6 @@ const App = () => {
   };
 
   const handleMultipleQuotes = (authorName) => (e) => {
-    console.log(authorName);
     setMultipleAuthorBoolean(true);
     getQuotesByAuthor(authorName);
   };
@@ -84,14 +65,14 @@ const App = () => {
       <div className="app-content">
         {multipleAuthorsBoolean ? (
           <MultipleQuotes
-            isLoading={isLoading}
-            author={author}
-            multipleQuoteData={multipleQuoteData}
+            isLoading={storeA.isLoading}
+            author={storeQ.author}
+            multipleQuoteData={storeA.multipleQuotes}
           />
         ) : (
           <SingleQuote
-            isLoading={isLoading}
-            singleQuoteData={singleQuoteData}
+            isLoading={storeQ.isLoading}
+            singleQuoteData={storeQ.quotes}
             handleMultipleQuotes={handleMultipleQuotes}
           />
         )}
@@ -104,4 +85,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default observer(App);
